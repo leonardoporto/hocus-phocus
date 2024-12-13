@@ -1,0 +1,41 @@
+{
+    "type": "APL",
+    "version": "1.8",
+    "mainTemplate": {
+        "parameters": [
+            "payload"
+        ],
+        "items": [
+            {
+                "type": "Container",
+                "width": "100%",
+                "height": "100%",
+                "items": [
+                    {
+                        "type": "Text",
+                        "text": "${payload.timerState.title}",
+                        "fontSize": "36dp",
+                        "textAlign": "center",
+                        "paddingTop": "30dp"
+                    },
+                    {
+                        "type": "Text",
+                        "text": "${payload.timerState.timeRemaining}",
+                        "fontSize": "72dp",
+                        "textAlign": "center",
+                        "paddingTop": "50dp",
+                        "color": "${payload.timerState.color}"
+                    },
+                    {
+                        "type": "Text",
+                        "text": "${payload.timerState.status}",
+                        "fontSize": "24dp",
+                        "textAlign": "center",
+                        "paddingTop": "20dp"
+                    }
+                ],
+                "backgroundColor": "#232F3E"
+            }
+        ]
+    }
+} 

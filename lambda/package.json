@@ -1,0 +1,11 @@
+{
+  "name": "alexa-pomodoro-timer",
+  "version": "1.0.0",
+  "description": "Skill Alexa para gerenciar técnica Pomodoro",
+  "main": "index.js",
+  "dependencies": {
+    "ask-sdk-core": "^2.12.1",
+    "ask-sdk-model": "^1.39.0",
+    "ask-sdk-runtime": "^2.12.1"
+  }
+} 
