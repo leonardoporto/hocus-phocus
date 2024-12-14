@@ -12,6 +12,60 @@ function createTimer(handlerInput, duration) {
     const attributes = attributesManager.getSessionAttributes();
     attributes[TIMER_KEY] = timer;
     attributesManager.setSessionAttributes(attributes);
+
+    // Inicia a atualização do display
+    updateTimerDisplay(handlerInput);
+}
+
+function updateTimerDisplay(handlerInput) {
+    const timeRemaining = getTimerStatus(handlerInput);
+    
+    if (timeRemaining !== null && timeRemaining > 0) {
+        const minutes = Math.floor(timeRemaining / 60);
+        const seconds = timeRemaining % 60;
+        const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+        if (supportsAPL(handlerInput)) {
+            handlerInput.responseBuilder.addDirective({
+                type: 'Alexa.Presentation.APL.ExecuteCommands',
+                token: 'hocusPhocusToken',
+                commands: [
+                    {
+                        type: 'Sequential',
+                        commands: [
+                            {
+                                type: 'SetValue',
+                                componentId: 'timeRemaining',
+                                property: 'text',
+                                value: timeString
+                            },
+                            {
+                                type: 'SetValue',
+                                componentId: 'status',
+                                property: 'text',
+                                value: 'Em andamento'
+                            },
+                            {
+                                type: 'Idle',
+                                delay: 1000
+                            },
+                            {
+                                type: 'AutoPage',
+                                componentId: 'timeRemaining',
+                                duration: 1000
+                            }
+                        ],
+                        repeatCount: -1 // Repete indefinidamente
+                    }
+                ]
+            });
+        }
+    }
+}
+
+function supportsAPL(handlerInput) {
+    const supportedInterfaces = handlerInput.requestEnvelope.context.System.device.supportedInterfaces;
+    return !!supportedInterfaces['Alexa.Presentation.APL'];
 }
 
 function getTimerStatus(handlerInput) {
@@ -56,6 +110,9 @@ function resumeTimer(handlerInput) {
         timer.duration = timer.remaining;
         timer.status = 'RUNNING';
         attributesManager.setSessionAttributes(attributes);
+        
+        // Reinicia a atualização do display
+        updateTimerDisplay(handlerInput);
         return true;
     }
     return false;
@@ -73,5 +130,6 @@ module.exports = {
     getTimerStatus,
     pauseTimer,
     resumeTimer,
-    cancelTimer
+    cancelTimer,
+    updateTimerDisplay
 }; 

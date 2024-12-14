@@ -1,11 +1,14 @@
 {
-  "name": "alexa-pomodoro-timer",
+  "name": "hocus-phocus",
   "version": "1.0.0",
-  "description": "Skill Alexa para gerenciar técnica Pomodoro",
+  "description": "Skill Alexa para gerenciar técnica Pomodoro com Hocus Phocus",
   "main": "index.js",
   "dependencies": {
     "ask-sdk-core": "^2.12.1",
     "ask-sdk-model": "^1.39.0",
-    "ask-sdk-runtime": "^2.12.1"
+    "ask-sdk-runtime": "^2.12.1",
+    "fs": "0.0.1-security",
+    "path": "^0.12.7",
+    "ask-sdk-dynamodb-persistence-adapter": "^2.12.1"
   }
 } 
